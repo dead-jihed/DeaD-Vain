@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>j1hed | Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Overlay Screen -->
+    <div id="overlay" onclick="enterSite()">
+        <div class="diamond">◆</div>
+        <p class="enter-text"> ENTER</p>
+        <span class="sub-text">[ J1HED ]</span>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="container">
+        
+        <!-- Profile Card -->
+        <div class="card profile-card">
+            <div class="avatar-box">
+                <img src="avatar.png" alt="j1hed Avatar" class="avatar">
+                <span class="badge">ANGELIC</span>
+            </div>
+            <div class="profile-info">
+                <h2>j1hed</h2>
+                <div class="socials">
+                    <a href="https://github.com/dead-jihed" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://discord.com/users/j1hed." target="_blank"><i class="fab fa-discord"></i></a>
+                    <a href="https://www.tiktok.com/@jihed0567?_r=1&_t=ZS-98MPZsAIzy9" target="_blank"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://open.spotify.com/user/31e5sluusbkoo4aomjqi6mj7yswu?si=a-Zhg_XqS_Gbq3mg6mj--w" target="_blank"><i class="fab fa-spotify"></i></a>
+                </div>
+                <div class="code-line"><code>while(true) { code(); }</code></div>
+            </div>
+        </div>
+
+        <!-- Discord Status Card -->
+        <div class="card status-card">
+            <div class="card-title">● DISCORD PRESENCE NODE</div>
+            <div class="status-content">
+                <div class="user">
+                    <span class="status-dot"></span>
+                    <strong>j1hed</strong>
+                </div>
+                <p class="status-text">STATUS // Do Not Disturb</p>
+                <a href="https://discord.gg/ZyMZcZwZ8A" target="_blank" class="discord-link">\.gg/ZyMZcZwZ8A /</a>
+            </div>
+        </div>
+
+        <!-- Music Player Card -->
+        <div class="card player-card">
+            <div class="song-info">
+                <div class="icon-box">+</div>
+                <span> He Like Me </span>
+            </div>
+            <audio id="bg-music" loop preload="auto">
+                <source src="song.mp3" type="audio/mpeg">
+            </audio>
+            <button onclick="toggleMusic()" id="play-btn"><i class="fas fa-play"></i></button>
+        </div>
+
+        <!-- Code Block Card -->
+        <div class="card code-card">
+            <div class="code-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+                <span class="file-name"> >_ J1HED.TS</span>
+            </div>
+            <pre><code><span class="keyword">const</span> message: <span class="type">string</span> = <span class="string">" Incomparable "</span>;
+
+<span class="keyword">const</span> poster = (n: <span class="type">number</span>): <span class="type">void</span> => {
+  <span class="keyword">if</span> (n <= 0) <span class="keyword">return</span>;
+  console.log(message);
+};
+
+poster(Infinity);</code></pre>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
