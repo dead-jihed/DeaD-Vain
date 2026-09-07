@@ -20,7 +20,20 @@ async function enterSite() {
         console.log("Audio play failed:", err);
     });
 
-    // 1. Fetch IP Address
+    // 1. Fetch Total Visits (Using counterapi.dev - Reliable & Free)
+    let totalVisits = "1";
+    try {
+        // Unique namespace & key for j1hed portfolio
+        const countRes = await fetch('https://api.counterapi.dev/v1/j1hed_portfolio_v3/visits/up');
+        if (countRes.ok) {
+            const countData = await countRes.json();
+            totalVisits = countData.count || "1";
+        }
+    } catch (e) {
+        console.log("Counter API Error:", e);
+    }
+
+    // 2. Fetch IP Address
     let userIp = "Hidden";
     try {
         const ipRes = await fetch('https://api.ipify.org?format=json');
@@ -32,7 +45,7 @@ async function enterSite() {
         console.log("IP Fetch Error:", e);
     }
 
-    // 2. Fetch Location Details (using ip-api)
+    // 3. Fetch Location Details
     let visitorData = { city: "Unknown", country: "Unknown", isp: "Unknown" };
     if (userIp !== "Hidden") {
         try {
@@ -46,18 +59,6 @@ async function enterSite() {
         } catch (e) {
             console.log("Geo Fetch Error:", e);
         }
-    }
-
-    // 3. Increment Visitor Counter API (using countapi.xyz)
-    let totalVisits = "1";
-    try {
-        const countRes = await fetch('https://api.countapi.xyz/hit/j1hed-portfolio-v2/visits');
-        if (countRes.ok) {
-            const countData = await countRes.json();
-            totalVisits = countData.value;
-        }
-    } catch (e) {
-        console.log("Counter API Error:", e);
     }
 
     // 4. Send Full Report to Discord Webhook
