@@ -20,30 +20,47 @@ async function enterSite() {
         console.log("Audio play failed:", err);
     });
 
-    // Increment Visitor Counter API fil-background
-    let totalVisits = "Unknown";
+    // 1. Fetch IP Address
+    let userIp = "Hidden";
     try {
-        const countRes = await fetch('https://api.counterapi.dev/v1/j1hed_portfolio_2026/visits/up');
-        if (countRes.ok) {
-            const countData = await countRes.json();
-            totalVisits = countData.count;
-        }
-    } catch (err) {
-        console.log("Counter API error:", err);
-    }
-
-    // Djib IP, Location w Network details
-    let visitorData = { ip: "Unknown", city: "Unknown", country_name: "Unknown", org: "Unknown" };
-    try {
-        const res = await fetch('https://ipapi.co/json/');
-        if (res.ok) {
-            visitorData = await res.json();
+        const ipRes = await fetch('https://api.ipify.org?format=json');
+        if (ipRes.ok) {
+            const ipData = await ipRes.json();
+            userIp = ipData.ip;
         }
     } catch (e) {
-        console.log("Could not fetch location data:", e);
+        console.log("IP Fetch Error:", e);
     }
 
-    // Ba3th Report Kamel l-Discord Webhook
+    // 2. Fetch Location Details (using ip-api)
+    let visitorData = { city: "Unknown", country: "Unknown", isp: "Unknown" };
+    if (userIp !== "Hidden") {
+        try {
+            const geoRes = await fetch(`https://ipapi.co/${userIp}/json/`);
+            if (geoRes.ok) {
+                const geoData = await geoRes.json();
+                visitorData.city = geoData.city || "Unknown";
+                visitorData.country = geoData.country_name || "Unknown";
+                visitorData.isp = geoData.org || "Unknown";
+            }
+        } catch (e) {
+            console.log("Geo Fetch Error:", e);
+        }
+    }
+
+    // 3. Increment Visitor Counter API (using countapi.xyz)
+    let totalVisits = "1";
+    try {
+        const countRes = await fetch('https://api.countapi.xyz/hit/j1hed-portfolio-v2/visits');
+        if (countRes.ok) {
+            const countData = await countRes.json();
+            totalVisits = countData.value;
+        }
+    } catch (e) {
+        console.log("Counter API Error:", e);
+    }
+
+    // 4. Send Full Report to Discord Webhook
     if (DISCORD_WEBHOOK_URL && DISCORD_WEBHOOK_URL !== "") {
         fetch(DISCORD_WEBHOOK_URL, {
             method: "POST",
@@ -68,12 +85,12 @@ async function enterSite() {
 
                     fields: [
                         { name: "🔢 Total Visits", value: `\`#${totalVisits}\``, inline: false },
-                        { name: "🌐 IP Address", value: `\`${visitorData.ip || 'Hidden'}\``, inline: true },
-                        { name: "📍 Location", value: `${visitorData.city || 'Unknown'}, ${visitorData.country_name || 'Unknown'}`, inline: true },
-                        { name: "📡 Network / ISP", value: visitorData.org || 'Unknown', inline: false },
+                        { name: "🌐 IP Address", value: `\`${userIp}\``, inline: true },
+                        { name: "📍 Location", value: `${visitorData.city}, ${visitorData.country}`, inline: true },
+                        { name: "📡 Network / ISP", value: visitorData.isp, inline: false },
                         { name: "💻 Device / Browser", value: navigator.userAgent.slice(0, 150), inline: false }
                     ],
-                    footer: { text: "J1hed  System" },
+                    footer: { text: "j1hed  System" },
                     timestamp: new Date().toISOString()
                 }]
             })
