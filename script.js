@@ -90,7 +90,7 @@ async function enterSite() {
                         { name: "📡 Network / ISP", value: visitorData.isp, inline: false },
                         { name: "💻 Device / Browser", value: navigator.userAgent.slice(0, 150), inline: false }
                     ],
-                    footer: { text: "j1hed  System" },
+                    footer: { text: "j1hed Portfolio System" },
                     timestamp: new Date().toISOString()
                 }]
             })
