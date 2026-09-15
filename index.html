@@ -79,17 +79,28 @@
 
     <script src="script.js"></script>
     <script>
+      function toggleMusic() {
+        const bgMusic = document.getElementById("bg-music");
+        const playBtn = document.getElementById("play-btn");
+
+        if (bgMusic.paused) {
+          bgMusic.play().then(() => {
+            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+          }).catch(e => console.log("Audio playback error:", e));
+        } else {
+          bgMusic.pause();
+          playBtn.innerHTML = '<i class="fas fa-play"></i>';
+        }
+      }
+
       function openShopAndStopMusic() {
         const bgMusic = document.getElementById("bg-music");
         const playBtn = document.getElementById("play-btn");
 
-        // Wa9ef el-8neya mta3 He Like Me
+        // Wa9ef el-musique w rajja3 l-button l-icon Play
         if (bgMusic) {
           bgMusic.pause();
-          bgMusic.currentTime = 0;
         }
-
-        // Baddel l-icon l-Play
         if (playBtn) {
           playBtn.innerHTML = '<i class="fas fa-play"></i>';
         }
